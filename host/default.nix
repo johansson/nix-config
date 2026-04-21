@@ -11,6 +11,8 @@
     neededForUsers = true;
   };
 
+  users.mutableUsers = false;
+
   users.users.will = {
     description = "Will Johansson";
     isNormalUser = true;
