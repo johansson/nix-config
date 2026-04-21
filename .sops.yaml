@@ -1,0 +1,24 @@
+keys:
+  - &will age1swmhyhcdac3yydhlglgdazh3y5d4kd6wqvyf5q54rdeja5jtm4vst54965
+  - &playground age18pcepjjzknhf6qrc6h96mj5ud8jgx5qag60s32l43zwpk5kpevhqq3vwmj
+  - &backups age1yd9rvtl9fqe639a458em4dfd8j6e9fzzx8w0jpcgg3te0v74yuksyhs5n6
+
+creation_rules:
+  - path_regex: secrets/playground\.yaml$
+    key_groups:
+      - age:
+          - *will
+          - *playground
+
+  - path_regex: secrets/backups\.yaml$
+    key_groups:
+      - age:
+          - *will
+          - *backups
+
+  - path_regex: secrets/common\.yaml$
+    key_groups:
+      - age:
+          - *will
+          - *playground
+          - *backups

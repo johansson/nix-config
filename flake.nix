@@ -7,6 +7,10 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -14,6 +18,7 @@
       self,
       nixpkgs,
       disko,
+      sops-nix,
       ...
     }:
     {
@@ -21,13 +26,22 @@
         playground = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
+            sops-nix.nixosModules.sops
             ./configuration/proxmox-ct.nix
             ./host/default.nix
             ./host/playground
           ];
         };
 
-        # Add future hosts here
+        backups = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            sops-nix.nixosModules.sops
+            ./configuration/proxmox-ct.nix
+            ./host/default.nix
+            ./host/backups
+          ];
+        };
       };
     };
 }
