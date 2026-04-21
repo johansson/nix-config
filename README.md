@@ -59,6 +59,12 @@ mkdir -p secrets # if it didn't exist already
 sops secrets/foo.yaml
 ```
 
+For example:
+
+```
+will-password-hash: $y$j9T$bdwKt4cTHRxm3bA20SWBP/$cgn4rhGZ8zZtWwicEqN/5vL90tyffSnYMQMb9cCIMA8
+```
+
 ### Make sure it's all committed to git
 
 ```bash
