@@ -20,9 +20,9 @@ Make note of the public key, this will be put in `.sops.yaml`.
 ### Create host sops secret
 
 ```bash
-mkdir -p "$HOME/Library/Application Support/sops/age/hosts"
-age-keygen -o "$HOME/Library/Application Support/sops/age/hosts/foo.txt"
-chmod 600 "$HOME/Library/Application Support/sops/age/hosts/foo.txt"
+mkdir -p "$HOME/Library/Application Support/sops/age/hosts/foo/var/lib/sops-nix"
+age-keygen -o "$HOME/Library/Application Support/sops/age/hosts/foo/var/lib/sops-nix/key.txt"
+chmod 600 "$HOME/Library/Application Support/sops/age/hosts/foo/var/lib/sops-nix/key.txt"
 ```
 
 ### Add it to .sops.yaml
@@ -90,3 +90,13 @@ nixos-rebuild switch --flake .#foo \
 ```
 
 `--build-host` is only needed if the computer you're running `nixos-rebuild` does not match the CPU architecture and OS of the target, as I am doing with my M3 MacBook Pro. `playground` is my `linux-x86_64` NixOS builder.
+
+### Or, if you're provisioning a new machine with `nixos-anywhere`
+
+```bash
+cd nix-config
+nixos-anywhere --flake .#foo \
+  --build-on local \
+  --extra-files "$HOME/Library/Application Support/sops/age/hosts/foo" \
+  root@<new-machine-ip>
+```
