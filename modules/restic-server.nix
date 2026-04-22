@@ -21,7 +21,7 @@
   };
 
   systemd.tmpfiles.rules = [
-    "d /srv/restic 0750 restic restic -"
+    "d /srv/restic 0700 restic restic -"
   ];
 
   networking.firewall.allowedTCPPorts = [ 8000 ];
