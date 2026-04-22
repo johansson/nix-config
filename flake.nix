@@ -40,6 +40,7 @@
             ./configuration/proxmox-ct.nix
             ./host/default.nix
             ./host/backups
+            ./modules/restic-server.nix
           ];
         };
       };
