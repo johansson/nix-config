@@ -1,5 +1,20 @@
 { config, pkgs, lib, ... }:
+let
+  restic-shell = pkgs.writeShellApplication {
+    name = "restic-shell";
+    runtimeInputs = [ pkgs.restic ];
+    text = ''
+      export RESTIC_REPOSITORY=/srv/restic/backfire-prod
+      export RESTIC_PASSWORD_FILE=/run/secrets/restic-repo-password
+      exec restic "$@"
+    '';
+  };
+in
 {
+  environment.systemPackages = [
+    restic-shell
+  ];
+
   sops.secrets.restic-htpasswd = {
     owner = "restic";
     group = "restic";
