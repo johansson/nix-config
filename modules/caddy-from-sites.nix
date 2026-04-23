@@ -7,7 +7,7 @@ let
   inherit (sitesFile) domain sites;
 
   caddySites = lib.filterAttrs (_: s: s ? caddy) sites;
-  mkVhost = _: s: lib.nameValuePair "${s.subdomain}.${domain}" {
+  mkVhost = _: s: lib.nameValuePair "${s.subdomain}, ${s.subdomain}.${domain}" {
     extraConfig = ''
       reverse_proxy ${s.caddy.upstreamHost}:${toString s.caddy.upstreamPort} {
         ${s.caddy.extra or ""}

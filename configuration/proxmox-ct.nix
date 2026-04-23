@@ -30,6 +30,7 @@
     extraConfig = ''
       Cache=true
       CacheFromLocalhost=true
+      FallbackDNS=
     '';
   };
 
