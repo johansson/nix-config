@@ -12,6 +12,13 @@
     privileged = false;
   };
 
+  networking.nameservers = [ "10.1.0.2" ];
+  networking.search = [ "home.johansson.io" ];
+  networking.useNetworkd = true;
+
+  systemd.network.enable = true;
+  systemd.services.systemd-networkd-wait-online.enable = true;
+
   systemd.suppressedSystemUnits = [
     "dev-mqueue.mount"
     "sys-kernel-debug.mount"
@@ -20,7 +27,6 @@
 
   services.resolved = {
     enable = true;
-    domains = [ "home.johansson.io" ];
     extraConfig = ''
       Cache=true
       CacheFromLocalhost=true
