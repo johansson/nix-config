@@ -30,6 +30,7 @@
             ./configuration/proxmox-ct.nix
             ./host/default.nix
             ./host/playground
+            ./modules/trust-home.johansson.io-root-ca.nix
           ];
         };
 
@@ -40,7 +41,21 @@
             ./configuration/proxmox-ct.nix
             ./host/default.nix
             ./host/backups
+            ./modules/trust-home.johansson.io-root-ca.nix
             ./modules/restic-server.nix
+          ];
+        };
+
+        caddy = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            sops-nix.nixosModules.sops
+            ./configuration/proxmox-ct.nix
+            ./host/default.nix
+            ./host/caddy
+            ./modules/acme-server.nix
+            ./modules/trust-home.johansson.io-root-ca.nix
+            ./modules/caddy-from-sites.nix
           ];
         };
       };
