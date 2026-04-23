@@ -58,6 +58,17 @@
             ./modules/caddy-from-sites.nix
           ];
         };
+
+        testnix = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            sops-nix.nixosModules.sops
+            ./configuration/proxmox-ct.nix
+            ./host/default.nix
+            ./host/testnix
+            ./modules/trust-home.johansson.io-root-ca.nix
+          ];
+        };
       };
     };
 }

@@ -3,6 +3,7 @@ keys:
   - &playground age18pcepjjzknhf6qrc6h96mj5ud8jgx5qag60s32l43zwpk5kpevhqq3vwmj
   - &backups age1yd9rvtl9fqe639a458em4dfd8j6e9fzzx8w0jpcgg3te0v74yuksyhs5n6
   - &caddy age1kj8sfypucpspjv4jdxtnpdnq62zgalnhurxxqzmcdmevx63gl9pqlywxkd
+  - &testnix age1gag69eyc9sv8z3zyheq8sasqjhqzutxyxycz0dc3wskpzmckxs3s4m94zk
 
 creation_rules:
   - path_regex: secrets/playground\.yaml$
@@ -23,6 +24,12 @@ creation_rules:
         - *will
         - *caddy
 
+  - path_regex: secrets/testnix\.yaml$
+    key_groups:
+      - age:
+        - *will
+        - *testnix
+
   - path_regex: secrets/common\.yaml$
     key_groups:
       - age:
@@ -30,3 +37,4 @@ creation_rules:
           - *playground
           - *backups
           - *caddy
+          - *testnix
