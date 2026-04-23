@@ -7,13 +7,28 @@ let
   inherit (sitesFile) domain sites;
 
   caddySites = lib.filterAttrs (_: s: s ? caddy) sites;
-  mkVhost = _: s: lib.nameValuePair "${s.subdomain}, ${s.subdomain}.${domain}" {
-    extraConfig = ''
-      reverse_proxy ${s.caddy.upstreamHost}:${toString s.caddy.upstreamPort} {
-        ${s.caddy.extra or ""}
-      }
-    '';
-  };
+
+  mkVhosts = _: s: [
+    # Bare subdomain, redirect to FQDN
+    (lib.nameValuePair s.subdomain {
+      extraConfig = ''
+        redir https://${s.subdomain}.${domain}{uri} permanent
+      '';
+    })
+
+    # FQDN to reverse proxy
+    (lib.nameValuePair "${s.subdomain}.${domain}" {
+      extraConfig = ''
+        reverse_proxy ${s.caddy.upstreamHost}:${toString s.caddy.upstreamPort} {
+          ${s.caddy.extra or ""}
+        }
+      '';
+    })
+  ];
+
+  caddyVhosts = lib.listToAttrs
+    (lib.flatten
+      (lib.mapAttrsToList mkVhosts caddySites));
 
   landing = pkgs.callPackage ./landing-page {
     inherit sites domain;
@@ -30,7 +45,7 @@ in
       acme_ca https://ca.home.johansson.io:8443/acme/acme/directory
     '';
 
-    virtualHosts = (lib.mapAttrs' mkVhost caddySites) // {
+    virtualHosts = caddyVhosts // {
       "${domain}" = {
         extraConfig = ''
           root * ${landing}
