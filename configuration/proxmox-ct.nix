@@ -20,7 +20,6 @@
 
   services.resolved = {
     enable = true;
-    fallbackDns = [ "10.0.1.2" ];
     domains = [ "home.johansson.io" ];
     extraConfig = ''
       Cache=true
