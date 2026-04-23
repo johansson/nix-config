@@ -2,6 +2,16 @@
   domain = "home.johansson.io";
 
   sites = {
+    unifi = {
+      subdomain = "unifi";
+
+      landing = {
+        label = "Unifi Cloud Gateway Max";
+        description = "Router";
+        category = "network";
+      };
+    };
+
     proxmox = {
       subdomain = "proxmox01";
       port = 8006;

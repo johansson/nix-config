@@ -32,9 +32,10 @@ let
     (lib.attrValues resolved);
 
   categoryMeta = {
-    infra      = { title = "Infrastructure"; order = 1; };
-    apps       = { title = "Applications";   order = 2; };
-    monitoring = { title = "Monitoring";     order = 3; };
+    network    = { title = "Network";        order = 1; };
+    infra      = { title = "Infrastructure"; order = 2; };
+    apps       = { title = "Applications";   order = 3; };
+    monitoring = { title = "Monitoring";     order = 4; };
     other      = { title = "Other";          order = 99; };
   };
 
